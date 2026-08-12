@@ -1,7 +1,118 @@
 package com.mycompany.biblioteca;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Main {
+
+    static ArrayList<Cliente> clientes = new ArrayList<>();
+    static Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
-        System.out.println("Sistema de Gestión de Biblioteca");
+        // Aquí irá el menú más adelante
+    }
+
+    static Cliente buscarClientePorId(String id) {
+        for (Cliente cliente : clientes) {
+            if (cliente.getId().equalsIgnoreCase(id)) {
+                return cliente;
+            }
+        }
+        return null;
+    }
+
+    static void crearCliente() {
+
+        System.out.println("\n--- CREAR CLIENTE ---");
+
+        System.out.print("ID: ");
+        String id = sc.nextLine();
+
+        if (buscarClientePorId(id) != null) {
+            System.out.println("Ya existe un cliente con ese ID.");
+            return;
+        }
+
+        System.out.print("Nombre: ");
+        String nombre = sc.nextLine();
+
+        System.out.print("Teléfono: ");
+        String telefono = sc.nextLine();
+
+        System.out.print("Email: ");
+        String email = sc.nextLine();
+
+        Cliente cliente = new Cliente(id, nombre, telefono, email);
+
+        clientes.add(cliente);
+
+        System.out.println("Cliente creado correctamente.");
+    }
+
+    static void listarClientes() {
+
+        System.out.println("\n--- LISTA DE CLIENTES ---");
+
+        if (clientes.isEmpty()) {
+            System.out.println("No existen clientes registrados.");
+            return;
+        }
+
+        for (Cliente cliente : clientes) {
+            System.out.println(cliente);
+        }
+    }
+
+    static void buscarCliente() {
+
+        System.out.print("Ingrese el ID del cliente: ");
+        String id = sc.nextLine();
+
+        Cliente cliente = buscarClientePorId(id);
+
+        if (cliente != null) {
+            System.out.println(cliente);
+        } else {
+            System.out.println("Cliente no encontrado.");
+        }
+    }
+    static void actualizarCliente() {
+
+        System.out.print("Ingrese el ID del cliente a actualizar: ");
+        String id = sc.nextLine();
+
+        Cliente cliente = buscarClientePorId(id);
+
+        if (cliente == null) {
+            System.out.println("Cliente no encontrado.");
+            return;
+        }
+
+        System.out.print("Nuevo nombre: ");
+        cliente.setNombre(sc.nextLine());
+
+        System.out.print("Nuevo teléfono: ");
+        cliente.setTelefono(sc.nextLine());
+
+        System.out.print("Nuevo email: ");
+        cliente.setEmail(sc.nextLine());
+
+        System.out.println("Cliente actualizado correctamente.");
+    }
+    static void eliminarCliente() {
+
+        System.out.print("Ingrese el ID del cliente a eliminar: ");
+        String id = sc.nextLine();
+
+        Cliente cliente = buscarClientePorId(id);
+
+        if (cliente == null) {
+            System.out.println("Cliente no encontrado.");
+            return;
+        }
+
+        clientes.remove(cliente);
+
+        System.out.println("Cliente eliminado correctamente.");
     }
 }
