@@ -62,4 +62,18 @@ public class Main {
             System.out.println(cliente);
         }
     }
+
+    static void buscarCliente() {
+
+        System.out.print("Ingrese el ID del cliente: ");
+        String id = sc.nextLine();
+
+        Cliente cliente = buscarClientePorId(id);
+
+        if (cliente != null) {
+            System.out.println(cliente);
+        } else {
+            System.out.println("Cliente no encontrado.");
+        }
+    }
 }
