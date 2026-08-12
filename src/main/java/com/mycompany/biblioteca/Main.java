@@ -48,4 +48,18 @@ public class Main {
 
         System.out.println("Cliente creado correctamente.");
     }
+
+    static void listarClientes() {
+
+        System.out.println("\n--- LISTA DE CLIENTES ---");
+
+        if (clientes.isEmpty()) {
+            System.out.println("No existen clientes registrados.");
+            return;
+        }
+
+        for (Cliente cliente : clientes) {
+            System.out.println(cliente);
+        }
+    }
 }
