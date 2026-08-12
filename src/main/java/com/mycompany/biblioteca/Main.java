@@ -99,4 +99,20 @@ public class Main {
 
         System.out.println("Cliente actualizado correctamente.");
     }
+    static void eliminarCliente() {
+
+        System.out.print("Ingrese el ID del cliente a eliminar: ");
+        String id = sc.nextLine();
+
+        Cliente cliente = buscarClientePorId(id);
+
+        if (cliente == null) {
+            System.out.println("Cliente no encontrado.");
+            return;
+        }
+
+        clientes.remove(cliente);
+
+        System.out.println("Cliente eliminado correctamente.");
+    }
 }
