@@ -13,7 +13,60 @@ public class Main {
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        // Aquí irá el menú más adelante
+        int opcion;
+
+        do {
+            System.out.println("\n===== SISTEMA DE BIBLIOTECA =====");
+            System.out.println("1. Crear cliente");
+            System.out.println("2. Listar clientes");
+            System.out.println("3. Crear libro");
+            System.out.println("4. Listar libros");
+            System.out.println("5. Registrar prestamo");
+            System.out.println("6. Registrar devolucion");
+            System.out.println("7. Listar prestamos");
+            System.out.println("0. Salir");
+            System.out.print("Seleccione una opcion: ");
+
+            opcion = Integer.parseInt(sc.nextLine());
+
+            switch (opcion) {
+                case 1:
+                    crearCliente();
+                    break;
+
+                case 2:
+                    listarClientes();
+                    break;
+
+                case 3:
+                    crearLibro();
+                    break;
+
+                case 4:
+                    listarLibros();
+                    break;
+
+                case 5:
+                    crearPrestamo();
+                    break;
+
+                case 6:
+                    devolverPrestamo();
+                    break;
+
+                case 7:
+                    listarPrestamos();
+                    break;
+
+                case 0:
+                    System.out.println("Saliendo del sistema...");
+                    break;
+
+                default:
+                    System.out.println("Opcion no valida.");
+            }
+
+        } while (opcion != 0);
     }
 
     static Cliente buscarClientePorId(String id) {
@@ -159,6 +212,19 @@ public class Main {
         System.out.println("Libro creado correctamente.");
     }
 
+    static void listarLibros() {
+
+        if (libros.isEmpty()) {
+            System.out.println("No hay libros registrados.");
+            return;
+        }
+
+        System.out.println("Lista de libros:");
+
+        for (Libro libro : libros) {
+            System.out.println(libro);
+        }
+    }
     static void crearPrestamo() {
 
         System.out.print("Ingrese ID del prestamo: ");
