@@ -1,5 +1,6 @@
 package com.mycompany.biblioteca;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -7,6 +8,8 @@ public class Main {
 
     static ArrayList<Cliente> clientes = new ArrayList<>();
     static ArrayList<Libro> libros = new ArrayList<>();
+    static ArrayList<Prestamo> prestamos = new ArrayList<>();
+
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -156,4 +159,85 @@ public class Main {
         System.out.println("Libro creado correctamente.");
     }
 
+    static void crearPrestamo() {
+
+        System.out.print("Ingrese ID del prestamo: ");
+        String idPrestamo = sc.nextLine();
+
+        System.out.print("Ingrese ID del cliente: ");
+        String idCliente = sc.nextLine();
+
+        Cliente cliente = buscarClientePorId(idCliente);
+
+        if (cliente == null) {
+            System.out.println("Cliente no encontrado.");
+            return;
+        }
+
+        System.out.print("Ingrese codigo del libro: ");
+        String codigo = sc.nextLine();
+
+        Libro libro = buscarLibroPorCodigo(codigo);
+
+        if (libro == null) {
+            System.out.println("Libro no encontrado.");
+            return;
+        }
+
+        if (!libro.isDisponible()) {
+            System.out.println("El libro no esta disponible.");
+            return;
+        }
+
+        Prestamo prestamo = new Prestamo(
+                idPrestamo,
+                cliente,
+                libro,
+                LocalDate.now(),
+                "ACTIVO"
+        );
+
+        prestamos.add(prestamo);
+        libro.setDisponible(false);
+
+        System.out.println("Prestamo registrado correctamente.");
+    }
+    static void devolverPrestamo() {
+
+        System.out.print("Ingrese ID del prestamo: ");
+        String idPrestamo = sc.nextLine();
+
+        for (Prestamo prestamo : prestamos) {
+
+            if (prestamo.getIdPrestamo().equalsIgnoreCase(idPrestamo)) {
+
+                if (prestamo.getEstado().equalsIgnoreCase("DEVUELTO")) {
+                    System.out.println("Este prestamo ya fue devuelto.");
+                    return;
+                }
+
+                prestamo.setEstado("DEVUELTO");
+                prestamo.getLibro().setDisponible(true);
+
+                System.out.println("Devolucion registrada correctamente.");
+                return;
+            }
+        }
+
+        System.out.println("Prestamo no encontrado.");
+    }
+
+    static void listarPrestamos() {
+
+        if (prestamos.isEmpty()) {
+            System.out.println("No hay prestamos registrados.");
+            return;
+        }
+
+        System.out.println("Lista de prestamos:");
+
+        for (Prestamo prestamo : prestamos) {
+            System.out.println(prestamo);
+        }
+    }
 }
